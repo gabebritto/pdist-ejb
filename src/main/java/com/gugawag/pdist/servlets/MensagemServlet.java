@@ -13,11 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(urlPatterns = {"/usuario.do"})
-public class UsuarioServlet extends HttpServlet {
-
-    @EJB(lookup="java:module/usuarioService")
-    private UsuarioService usuarioService;
+@WebServlet(urlPatterns = {"/mensagem.do"})
+public class MensagemServlet extends HttpServlet {
 
     @EJB(lookup="java:module/mensagemService")
     private MensagemService mensagemService;
@@ -28,14 +25,11 @@ public class UsuarioServlet extends HttpServlet {
         switch (operacao) {
             case "1": { // inserir
                 long id = Integer.parseInt(request.getParameter("id"));
-                String nome = request.getParameter("nome");
-                usuarioService.inserir(id, nome);
+                String texto = request.getParameter("texto");
+                mensagemService.inserir(id, texto);
             }
             case "2": { // listar
-                for(Usuario usuario: usuarioService.listar()){
-                    resposta.println(usuario.getNome());
-                }
-                for (Mensagem mensagem: mensagemService.listar()){
+                for(Mensagem mensagem: mensagemService.listar()){
                     resposta.println(mensagem.getTexto());
                 }
                 break;
